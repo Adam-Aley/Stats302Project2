@@ -1,0 +1,35 @@
+---
+title: "Project 2: Stats302Project2 Tutorial"
+author: "Adam Aley" 
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Stats302Project2 Tutorial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Installation
+
+To download the Stats302Project2 package, use the code below.
+
+Install \texttt{Stats302Project2} using:
+
+```{r, eval = FALSE}
+devtools::install_github("Adam-Aley/Stats302Project2")
+```
+
+Here, we load our example datasets as a \texttt{gapminder} object
+```{r, message = FALSE}
+library(tidyverse)
+library(class)
+library(randomForest)
+library(Stats302Project2)
+```
+
