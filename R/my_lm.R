@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' my_lm(lifeExp ~ gdpPercap + continent, my_gapminder)
-#' my_lm(body_mass_g ~ flipper_length_mm + island, my_penguins)
+#' my_lm(body_mass_g ~ flipper_length_mm + island, new_penguins)
 #'
 #' @export
 my_lm <- function(formula, data) {
@@ -22,7 +22,7 @@ my_lm <- function(formula, data) {
   # Store matrix response for y
   Y <- model.response(frame)
   # Computes and stores estimate for linear regression model and response
-  beta <- solve(t(x) %*% x) %*% t(x) %*% y
+  beta <- solve(t(X) %*% X) %*% t(X) %*% Y
   # Store degrees of freedom
   df <- length(Y) - length(beta)
   # Creates standard deviation of data

@@ -13,10 +13,9 @@
 #' and training error
 #'
 #' @examples
-#' my_knn_cv(cbind(my_gapminder$lifeExp, my_gapminder$gdpPercap),
-#' my_gapminder$continent, 20, 5)
-#' my_knn_cv(my_penguins[, -c(1, 2, 7, 8)],
-#' my_penguins$species, 1, 5)
+#' my_knn_cv(cbind(my_gapminder$gdpPercap, my_gapminder$lifeExp),
+#' my_gapminder$continent, 10, 5)
+#' my_knn_cv(new_penguins[, -c(1, 2, 7, 8)], new_penguins$species, 1, 5)
 #'
 #'
 #'
@@ -38,7 +37,7 @@ my_knn_cv <- function(train, cl, k_nn, k_cv) {
     # Specifices test set of used classes
     cl_test <- cl[folds == i]
     # Generates predictions
-    predictions <- knn(data_train, data_test, cl_train, k_nn)
+    predictions <- class::knn(data_train, data_test, cl_train, k_nn)
     # Calculates cv error of unused fold
     cv[i] <- sum(predictions != cl_test) / length(cl_test)
   }
@@ -46,7 +45,7 @@ my_knn_cv <- function(train, cl, k_nn, k_cv) {
   # Calculates and stores mean cv error
   cv_err <- mean(cv)
   # Stores total predictions from model
-  class <- knn(train, train, cl, k_nn)
+  class <- class::knn(train, train, cl, k_nn)
   # Calculates and stores training error
   train_err <- sum((class != cl) / length(cl))
   # Stores outputs

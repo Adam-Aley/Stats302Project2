@@ -20,7 +20,7 @@ This function creates a linear regression model based on data input
 }
 \examples{
 my_lm(lifeExp ~ gdpPercap + continent, my_gapminder)
-my_lm(body_mass_g ~ flipper_length_mm + island, my_penguins)
+my_lm(body_mass_g ~ flipper_length_mm + island, new_penguins)
 
 }
 \keyword{inference}

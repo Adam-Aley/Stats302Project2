@@ -15,7 +15,7 @@ The main data frame \code{gapminder} has 1704 rows and 6 variables:
 \item{gdpPercap}{GDP per capita (US$, inflation-adjusted)}
 }
 
-The supplemental data frame \code{gapminder_unfiltered}} was not
+The supplemental data frame \code{gapminder_unfiltered} was not
 filtered on \code{year} or for complete data and has 3313 rows.
 }
 \source{
@@ -64,6 +64,6 @@ gapminder \%>\%
 
 }
 \seealso{
-\code{country_colors}} for a nice color scheme for the countries
+\code{country_colors} for a nice color scheme for the countries
 }
 \keyword{datasets}
