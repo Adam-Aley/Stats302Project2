@@ -10,8 +10,8 @@
 #' @return Output list with values of the average MSE from total folds
 #'
 #' @examples
-#' my_rf_cv(my_gapminder, 5)
 #' my_rf_cv(new_penguins, 5)
+#' my_rf_cv(new_penguins, 10)
 #'
 #' @import randomForest
 #'

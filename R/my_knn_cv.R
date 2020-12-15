@@ -13,10 +13,8 @@
 #' and training error
 #'
 #' @examples
-#' my_knn_cv(cbind(my_gapminder$gdpPercap, my_gapminder$lifeExp),
-#' my_gapminder$continent, 10, 5)
 #' my_knn_cv(new_penguins[, -c(1, 2, 7, 8)], new_penguins$species, 1, 5)
-#'
+#' my_knn_cv(new_penguins[, -c(1, 2, 7, 8)], new_penguins$species, 5, 5)
 #'
 #'
 #' @export

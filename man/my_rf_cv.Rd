@@ -19,8 +19,8 @@ This function runs a random forest cross-validation prediction
 for a given set of data and calculates the the MSE errors
 }
 \examples{
-my_rf_cv(my_gapminder, 5)
 my_rf_cv(new_penguins, 5)
+my_rf_cv(new_penguins, 10)
 
 }
 \keyword{prediction}
