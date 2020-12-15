@@ -15,7 +15,8 @@ knitr::opts_chunk$set(
 )
 ```
 
-Here is \texttt{Stats302Project2}, a package containing four main functions and tutorials for my Stat 302 Final Project. These four functions include:
+Here is \texttt{Stats302Project2}, a package containing four main functions 
+and tutorials for my Stat 302 Final Project. These four functions include:
 
 - A t-test function
 - A linear regression function
@@ -24,7 +25,7 @@ Here is \texttt{Stats302Project2}, a package containing four main functions and 
 
 ## Installation
 
-To download the Stats302Project2 package, use the code below.
+To download the \texttt{Stats302Project2} package, use the code below.
 
 Install \texttt{Stats302Project2} using:
 
@@ -34,21 +35,50 @@ devtools::install_github("Adam-Aley/Stats302Project2")
 
 Here, we load our example datasets as a \texttt{gapminder} object:
 ```{r, message = FALSE}
-library(dplyr)
-library(tidyr)
 library(randomForest)
 library(Stats302Project2)
 ```
 
 # Demonstrating t-test
 
-All the following tests use the lifeExp data from my_gapminder
+All the following tests use the lifeExp data from my_gapminder.
+All our results will be compared against a p-value cut-off of $\alpha = 0.05$.
 
 First, we will demonstrate a test of the hypothesis:
 $H_0 : \mu = 60$
-$H_A : \mu = 60$
+$H_A : \mu \neq 60$
 ```{r}
 # Runs t-test
 my_test(my_gapminder$lifeExp, "two-sided", 60)
 ```
+
+We cannot reject the null hypothesis compared against a significance level of
+$\alpha = 0.05$, as p-value > 0.05.
+
+Next, we will demonstrate a test of the hypothesis:
+$H_0 : \mu = 60$
+$H_A : \mu < 60$
+```{r}
+# Runs t-test
+my_test(my_gapminder$lifeExp, "lesser", 60)
+```
+
+We can reject the null hypothesis compared against a significance level 
+of $\alpha = 0.05$, as p-value < 0.05.
+
+Finally, we will demonstrate a test of the hypothesis:
+$H_0 : \mu = 60$
+$H_A : \mu > 60$
+```{r}
+# Runs t-test
+my_test(my_gapminder$lifeExp, "greater", 60)
+```
+
+We cannot reject the null hypothesis compared against a significance level of
+$\alpha = 0.05$, as p-value > 0.05.
+
+
+
+
+
 

@@ -10,6 +10,8 @@
 #' t-statistics, and p-values
 #'
 #' @examples
+#' data("my_penguins")
+#' new_penguins <- na.omit(my_penguins)
 #' my_lm(lifeExp ~ gdpPercap + continent, my_gapminder)
 #' my_lm(body_mass_g ~ flipper_length_mm + island, new_penguins)
 #'

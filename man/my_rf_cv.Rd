@@ -19,6 +19,8 @@ This function runs a random forest cross-validation prediction
 for a given set of data and calculates the the MSE errors
 }
 \examples{
+data("my_penguins")
+new_penguins <- na.omit(my_penguins)
 my_rf_cv(new_penguins, 5)
 my_rf_cv(new_penguins, 10)
 

@@ -26,7 +26,7 @@ my_test <- function(x, alternative, mu) {
   # Parameters to determine null hypothesis test
   # P value of upper tale test
   if (alternative == "greater" ) {
-    p_val <- pt(abs(test_stat), df, lower.tail = FALSE)
+    p_val <- pt(test_stat, df, lower.tail = FALSE)
     # P value of two sided test
   } else if (alternative == "two-sided") {
     p_val <- 2 * pt(abs(test_stat), df, lower.tail = FALSE)
@@ -35,7 +35,7 @@ my_test <- function(x, alternative, mu) {
     p_val <- pt(test_stat, df, lower.tail = TRUE)
   } else {
     # Error message for alternative hypothesis
-    stop("Try Again")
+    stop("Try Again!")
   }
   # Store results for se, test statistic, df, alternative hypothesis, and p value
   results <- list("se" = se,
