@@ -20,7 +20,7 @@ for a given set of data and calculates the the MSE errors
 }
 \examples{
 my_rf_cv(my_gapminder, 5)
-my_rf_cv(my_penguins, 5)
+my_rf_cv(new_penguins, 5)
 
 }
 \keyword{prediction}

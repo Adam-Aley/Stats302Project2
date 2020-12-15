@@ -18,7 +18,7 @@
 #' my_knn_cv(my_penguins[, -c(1, 2, 7, 8)],
 #' my_penguins$species, 1, 5)
 #'
-#' @import class
+#'
 #'
 #' @export
 my_knn_cv <- function(train, cl, k_nn, k_cv) {

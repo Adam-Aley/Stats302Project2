@@ -29,5 +29,7 @@ my_gapminder$continent, 20, 5)
 my_knn_cv(my_penguins[, -c(1, 2, 7, 8)],
 my_penguins$species, 1, 5)
 
+
+
 }
 \keyword{prediction}

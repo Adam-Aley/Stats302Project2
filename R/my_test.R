@@ -12,8 +12,8 @@
 #' freedom, alternative hypothesis, and p-value after run through t.test
 #'
 #' @examples
-#' my_test(my_gapminder$lifeExp, "two.sided", 60)
-#' my_test(1:100, "two.sided", 60)
+#' my_test(my_gapminder$lifeExp, "two-sided", 60)
+#' my_test(1:100, "two-sided", 60)
 #'
 #' @export
 my_test <- function(x, alternative, mu) {

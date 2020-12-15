@@ -22,8 +22,8 @@ freedom, alternative hypothesis, and p-value after run through t.test
 This function conducts a t.test with a given dataset
 }
 \examples{
-my_test(my_gapminder$lifeExp, "two.sided", 60)
-my_test(1:100, "two.sided", 60)
+my_test(my_gapminder$lifeExp, "two-sided", 60)
+my_test(1:100, "two-sided", 60)
 
 }
 \keyword{inference}

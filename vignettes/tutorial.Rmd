@@ -15,6 +15,13 @@ knitr::opts_chunk$set(
 )
 ```
 
+Here is \texttt{Stats302Project2}, a package containing four main functions and tutorials for my Stat 302 Final Project. These four functions include:
+
+- A t-test function
+- A linear regression function
+- A k-nearest neighbors cross-validation function
+- A random forest cross-validation function
+
 ## Installation
 
 To download the Stats302Project2 package, use the code below.
@@ -25,11 +32,22 @@ Install \texttt{Stats302Project2} using:
 devtools::install_github("Adam-Aley/Stats302Project2")
 ```
 
-Here, we load our example datasets as a \texttt{gapminder} object
+Here, we load our example datasets as a \texttt{gapminder} object:
 ```{r, message = FALSE}
 library(tidyverse)
-library(class)
 library(randomForest)
 library(Stats302Project2)
+```
+
+# Demonstrating t-test
+
+All the following tests use the lifeExp data from my_gapminder
+
+First, we will demonstrate a test of the hypothesis:
+$H_0 : \mu = 60$
+$H_A : \mu = 60$
+```{r}
+# Runs t-test
+my_test(my_gapminder$lifeExp, "two-sided", 60)
 ```
 
