@@ -34,7 +34,8 @@ devtools::install_github("Adam-Aley/Stats302Project2")
 
 Here, we load our example datasets as a \texttt{gapminder} object:
 ```{r, message = FALSE}
-library(tidyverse)
+library(dplyr)
+library(tidyr)
 library(randomForest)
 library(Stats302Project2)
 ```
