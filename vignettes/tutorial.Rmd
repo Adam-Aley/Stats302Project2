@@ -190,7 +190,14 @@ ggplot(data = as.data.frame(cbind(as.numeric(CVs), folds)),
 ```
 
 
-
+```{r}
+# Creates vector of mean CVs for various folds
+average_cv <- c(mean(CVs[1:30]), mean(CVs[31:60]), mean(CVs[61:90]))
+# Creates vector of sd of CVs for various folds
+sd_cv <- c(sd(CVs[1:30]), sd(CVs[31:60]), sd(CVs[61:90]))
+# Produces table of means and sds for various folds
+as.data.frame(cbind(mean_CV, sd_CV))
+```
 
 
 
