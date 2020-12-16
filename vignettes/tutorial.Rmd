@@ -37,6 +37,11 @@ Here, we load our example datasets as a \texttt{gapminder} object:
 ```{r, message = FALSE}
 library(randomForest)
 library(Stats302Project2)
+library(ggplot2)
+library(dplyr)
+library(class)
+data("my_penguins")
+new_penguins <- na.omit(my_penguins)
 ```
 
 # Demonstrating t-test
@@ -76,6 +81,118 @@ my_test(my_gapminder$lifeExp, "greater", 60)
 
 We cannot reject the null hypothesis compared against a significance level of
 $\alpha = 0.05$, as p-value > 0.05.
+
+
+# Demonstrating linear regression function
+
+Using lifeExp data as the response variable and gdpPercap and continent as 
+explatory variables, we can create a linear regression model to test for 
+correlation. 
+
+```{r}
+#Runs linear regression function, creates model for inputs
+my_lm(lifeExp ~ gdpPercap + continent, my_gapminder)
+```
+
+
+The gdpPercap coefficient represents the change in GDP per Capita with a 
+corresponding change of 1 unit in Life Expectancy, seperated by continents.
+
+The hypothesis test associated with the gdpPercap coefficient is:
+$H_0 : GDP \ per \ capita \  does \ not \ affect \ Life Expectancy$
+$H_A : GDP \ per \ capita \ does \ affect \ Life Expectancy$
+
+We can reject the null hypothesis compared against a significance level 
+of $\alpha = 0.05$, as p-value < 0.05 by a significant amount. Therefore,
+GDP per capital does have a significant correlation to Life Expectancy.
+
+Here, we plot the Actual values against the Fitted values to get a sense of how
+strong our interpretation is:
+
+```{r}
+# Generates model
+lm <- my_lm(lifeExp ~ gdpPercap + continent, my_gapminder)
+# Creates prediction points from model
+model <- model.matrix(lifeExp ~ gdpPercap + continent,
+                      my_gapminder)%*%lm$Estimate
+# Plots actual values against predictions
+ggplot(data = cbind(my_gapminder, model) %>% rename(Continent = continent), 
+       aes(x = model, y = lifeExp, color = Continent) ) +
+  # Creates plots
+  geom_boxplot() +
+  # Sets lables
+  labs(title = "Actual vs. Fitted Life Expectancy", 
+       x = "Fitted", y = "Actual") +
+  # Resets theme
+  theme(plot.title = element_text(hjust = 0.5, face = "bold"))
+```
+
+Though the correlation between GDP per capita and Life Expectancy isn't perfect, with greater deviations for more populated continents, the plot 
+generally reflects our previous assumption of a strong correlation between the 
+two variables. 
+
+# Demonstrating K-Nearest Neighbors Cross-Validation Function
+
+Using K-Nearest Neighbors, we can predict the output of species with covariates bill_length_mm, bill_depth_mm, flipper_length_mm, and body_mass_g. 
+Using 5-fold cross validation, and iterating with a k_nn ranging from 1:10, we
+we can evaluate each prediction's training error and cross-validation error as 
+well. 
+
+```{r}
+data("my_penguins")
+new_penguins <- na.omit(my_penguins)
+# Create empty 10 unit vector
+cv <- numeric(10)
+# Create another empty 10 unit vector
+train <- numeric(10)
+# Stores cv and training errors for 5 fold k_nearest neighbors from 1 to 10
+for (n in 1:10) {
+  cv[n] <- my_knn_cv(new_penguins[, -c(1, 2, 7, 8)], new_penguins$species, n, 5)$cv_err
+  train[n] <- my_knn_cv(new_penguins[, -c(1, 2, 7, 8)], new_penguins$species, n, 5)$train_err
+}
+cbind(cv, train)
+``` 
+
+If I were to choose a model purely based on training misclassification rate, I would pick k = 1 due to the fact that it has a flawless classification rate. If I were to choose a model purely based on the cross-validation misclassification rate, I would choose k = 10 because, while it does not have the lowest misclassification rate, it would serve a better use for inputs not based off the training data. The training error data has high bias but low variability since it is based on the model we compare other input data to. On the other hand, cross-validation evaluates models against the training error with lower bias but high variance in order to better predict future inputs. 
+
+# Demonstrating Random Forest Cross-Validation Function
+
+```{r}
+cv_2 <- 1:30
+cv_5 <- 1:30
+cv_10 <- 1:30
+# Store results from each Random Forest Function into vectors
+for (k in 1:30) {
+cv_2[k] <- my_rf_cv(new_penguins, 2)
+cv_5[k] <- my_rf_cv(new_penguins, 5)
+cv_10[k] <-my_rf_cv(new_penguins, 10)
+}
+```
+```{r}
+# Groups all cvs
+CVs <- c(cv_2, cv_5, cv_10)
+# Categorize cvs by number of folds
+folds <- rep(c("k = 2", "k = 5", "k = 10"), each = 30)
+# Create boxplot of various numbers of folds
+ggplot(data = as.data.frame(cbind(as.numeric(CVs), folds)), 
+       aes(x = folds, y = CVs, group = folds)) +
+  # Generates plot
+  geom_boxplot() +
+  # Creates lables
+  labs(title = "Cross-Validation Errors of Multiple Random Forests", 
+       x = "Number of Folds", y = "Cross-Validation Error") +
+  # Resets themes
+  theme(plot.title = element_text(hjust = 0.5, face = "bold"), 
+        axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),
+        panel.spacing.x = unit(0.75, "cm")) +
+  # Gives sensible order to boxes of folds
+  scale_x_discrete(limits = c("k = 2", "k = 5", "k = 10"))
+```
+
+
+
+
+
 
 
 
