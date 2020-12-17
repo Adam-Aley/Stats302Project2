@@ -15,6 +15,8 @@ knitr::opts_chunk$set(
 )
 ```
 
+# Project 2: R Package 
+
 Here is \texttt{Stats302Project2}, a package containing four main functions 
 and tutorials for my Stat 302 Final Project. These four functions include:
 
@@ -45,13 +47,13 @@ data("my_penguins")
 new_penguins <- na.omit(my_penguins)
 ```
 
-# Demonstrating t-test
+## Demonstrating t-test Function
 
-All the following tests use the lifeExp data from 'my_gapminder'.
+All the following tests use the lifeExp data from my_gapminder.
 All our results will be compared against a p-value cut-off of $\alpha = 0.05$.
 
 First, we will demonstrate a test of the hypothesis:
-$H_0 : \mu = 60$
+$H_0 : \mu = 60$,
 $H_A : \mu \neq 60$
 ```{r}
 # Runs t-test
@@ -62,7 +64,7 @@ We cannot reject the null hypothesis compared against a significance level of
 $\alpha = 0.05$, as p-value > 0.05.
 
 Next, we will demonstrate a test of the hypothesis:
-$H_0 : \mu = 60$
+$H_0 : \mu = 60$, 
 $H_A : \mu < 60$
 ```{r}
 # Runs t-test
@@ -73,7 +75,7 @@ We can reject the null hypothesis compared against a significance level
 of $\alpha = 0.05$, as p-value < 0.05.
 
 Finally, we will demonstrate a test of the hypothesis:
-$H_0 : \mu = 60$
+$H_0 : \mu = 60$,
 $H_A : \mu > 60$
 ```{r}
 # Runs t-test
@@ -84,9 +86,9 @@ We cannot reject the null hypothesis compared against a significance level of
 $\alpha = 0.05$, as p-value > 0.05.
 
 
-# Demonstrating linear regression function
+## Demonstrating linear regression function
 
-Using 'lifeExp' data as the response variable and 'gdpPercap' and continent as 
+Using lifeExp data as the response variable and gdpPercap and continent as 
 explatory variables, we can create a linear regression model to test for 
 correlation. 
 
@@ -96,10 +98,11 @@ my_lm(lifeExp ~ gdpPercap + continent, my_gapminder)
 ```
 
 
-The 'gdpPercap' coefficient represents the change in GDP per Capita with a 
-corresponding change of 1 unit in Life Expectancy, seperated by 'continents'.
+The gdpPercap coefficient represents the change in GDP per Capita with a 
+corresponding change of 1 unit in Life Expectancy, seperated by continents.
 
 The hypothesis test associated with the gdpPercap coefficient is:
+
 $H_0 : GDP \ per \ capita \  does \ not \ affect \ Life Expectancy$
 $H_A : GDP \ per \ capita \ does \ affect \ Life Expectancy$
 
@@ -132,11 +135,13 @@ Though the correlation between GDP per capita and Life Expectancy isn't perfect,
 with greater deviations for more populated continents, the plot generally
 reflects our previous assumption of a strong correlation between the two variables. 
 
-# Demonstrating K-Nearest Neighbors Cross-Validation Function
+## Demonstrating K-Nearest Neighbors Cross-Validation Function
 
-Using 'K-Nearest Neighbors', we can predict the output of species with covariates 'bill_length_mm', 'bill_depth_mm', 'flipper_length_mm', and 'body_mass_g'. 
-Using 5-fold cross validation, and iterating with a 'k_nn' ranging from 1:10, we
-we can evaluate each prediction's 'training error' and 'cross-validation error' as 
+Using K-Nearest Neighbors, we can predict the output of species with covariates
+bill_length_mm, bill_depth_mm, flipper_length_mm, and body_mass_g. 
+
+Using 5-fold cross validation, and iterating with a k_nn ranging from 1:10, we
+we can evaluate each prediction's training error and cross-validation error as 
 well. 
 
 ```{r}
@@ -154,9 +159,17 @@ for (n in 1:10) {
 cbind(cv, train)
 ``` 
 
-If I were to choose a model purely based on training misclassification rate, I would pick k = 1 due to the fact that it has a flawless classification rate. If I were to choose a model purely based on the cross-validation misclassification rate, I would choose $k = 10$ because, while it does not have the lowest misclassification rate, it would serve a better use for inputs not based off the training data. The 'training error' data has high bias but low variability since it is based on the model we compare other input data to. On the other hand, cross-validation evaluates models against the training error with lower bias but high variance in order to better predict future inputs. 
+If I were to choose a model purely based on training misclassification rate,
+I would pick k = 1 due to the fact that it has a flawless classification rate.
+If I were to choose a model purely based on the cross-validation
+misclassification rate, I would choose $k = 10$ because, while it does not have
+the lowest misclassification rate, it would serve a better use for inputs not
+based off the training data. The training error data has high bias but low
+variability since it is based on the model we compare other input data to. On 
+the other hand, cross-validation evaluates models against the training error
+with lower bias but high variance in order to better predict future inputs. 
 
-# Demonstrating Random Forest Cross-Validation Function
+## Demonstrating Random Forest Cross-Validation Function
 
 ```{r}
 # Initialize three length 30 vectors
@@ -172,34 +185,32 @@ for (k in 1:30) {
 ```
 
 ```{r}
-# Groups all CVs
+# Groups CVs
 CVs <- cbind(CV_2, CV_5, CV_10)
-# Categorize CVs by number of folds
+# Split CVs by number of folds
 folds <- rep(c("2", "5", "10"), each = 30)
 final_folds <- as.factor(folds)
 df <- data.frame(CVs, final_folds)
-# Create boxplot of various numbers of folds
+# Create boxplot combining each fold group
 ggplot(data = as.data.frame(cbind(as.numeric(CVs), final_folds)), 
        aes(x = final_folds, y = CVs, group = final_folds)) +
   # Generates plot
   geom_boxplot() +
-  # Creates lables
+  # Labeling
   labs(title = "Cross-Validation Errors of Multiple Random Forests", 
        x = "Total Folds (2, 10, 5)", y = "Cross-Validation Error") +
-  # Resets themes
+  # Themes to outline boxplot
   theme(plot.title = element_text(hjust = 0.5, face = "bold"), 
         axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),
         panel.spacing.x = unit(0.75, "cm")) 
-# Gives sensible order to boxes of folds
-  scale_x_discrete(limits = c("k = 2", "k = 5", "k = 10"))
 ```
 
 
 
 ```{r}
-# Creates vector of mean CVs for various folds
+# Stores average CV for each fold group
 average_cv <- c(mean(CVs[1:30]), mean(CVs[31:60]), mean(CVs[61:90]))
-# Creates vector of sd of CVs for various folds
+# Stores standard deviation cv for each fold group
 sd_cv <- c(sd(CVs[1:30]), sd(CVs[31:60]), sd(CVs[61:90]))
 # Produces table of means and sds for various folds
 base <- as.data.frame(cbind(average_cv, sd_cv))
@@ -207,7 +218,11 @@ rownames(base) <- c("10 folds", "5 folds", "2 folds")
 base
 ```
 
-As the number of folds increase between each 'random forest test', we see a corresponding decrease in both the mean and standard deviation. With 2 total folds, we see a boxplot with a relatively high range compared to the boxplots of 5 and 10 folds, reflecting that more and more folds lead to higher accuracy and a smaller range of error. 
+As the number of folds increase between each random forest test, we see a 
+corresponding decrease in both the mean and standard deviation. With 2 total
+folds, we see a boxplot with a relatively high range compared to the boxplots
+of 5 and 10 folds, reflecting that more and more folds lead to higher accuracy
+and a smaller range of error. 
 
 
 
