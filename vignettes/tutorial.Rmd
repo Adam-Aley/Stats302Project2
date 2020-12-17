@@ -18,10 +18,10 @@ knitr::opts_chunk$set(
 Here is \texttt{Stats302Project2}, a package containing four main functions 
 and tutorials for my Stat 302 Final Project. These four functions include:
 
-- A t-test function
-- A linear regression function
-- A k-nearest neighbors cross-validation function
-- A random forest cross-validation function
+- A t-test function, 'my_test'
+- A linear regression function 'my_lm'
+- A k-nearest neighbors cross-validation function 'my_knn_cv'
+- A random forest cross-validation function 'my_rf_cv'
 
 ## Installation
 
@@ -39,6 +39,7 @@ library(randomForest)
 library(Stats302Project2)
 library(ggplot2)
 library(dplyr)
+library(testthat)
 library(class)
 data("my_penguins")
 new_penguins <- na.omit(my_penguins)
@@ -46,7 +47,7 @@ new_penguins <- na.omit(my_penguins)
 
 # Demonstrating t-test
 
-All the following tests use the lifeExp data from my_gapminder.
+All the following tests use the lifeExp data from 'my_gapminder'.
 All our results will be compared against a p-value cut-off of $\alpha = 0.05$.
 
 First, we will demonstrate a test of the hypothesis:
@@ -85,7 +86,7 @@ $\alpha = 0.05$, as p-value > 0.05.
 
 # Demonstrating linear regression function
 
-Using lifeExp data as the response variable and gdpPercap and continent as 
+Using 'lifeExp' data as the response variable and 'gdpPercap' and continent as 
 explatory variables, we can create a linear regression model to test for 
 correlation. 
 
@@ -95,8 +96,8 @@ my_lm(lifeExp ~ gdpPercap + continent, my_gapminder)
 ```
 
 
-The gdpPercap coefficient represents the change in GDP per Capita with a 
-corresponding change of 1 unit in Life Expectancy, seperated by continents.
+The 'gdpPercap' coefficient represents the change in GDP per Capita with a 
+corresponding change of 1 unit in Life Expectancy, seperated by 'continents'.
 
 The hypothesis test associated with the gdpPercap coefficient is:
 $H_0 : GDP \ per \ capita \  does \ not \ affect \ Life Expectancy$
@@ -133,9 +134,9 @@ reflects our previous assumption of a strong correlation between the two variabl
 
 # Demonstrating K-Nearest Neighbors Cross-Validation Function
 
-Using K-Nearest Neighbors, we can predict the output of species with covariates bill_length_mm, bill_depth_mm, flipper_length_mm, and body_mass_g. 
-Using 5-fold cross validation, and iterating with a k_nn ranging from 1:10, we
-we can evaluate each prediction's training error and cross-validation error as 
+Using 'K-Nearest Neighbors', we can predict the output of species with covariates 'bill_length_mm', 'bill_depth_mm', 'flipper_length_mm', and 'body_mass_g'. 
+Using 5-fold cross validation, and iterating with a 'k_nn' ranging from 1:10, we
+we can evaluate each prediction's 'training error' and 'cross-validation error' as 
 well. 
 
 ```{r}
@@ -153,7 +154,7 @@ for (n in 1:10) {
 cbind(cv, train)
 ``` 
 
-If I were to choose a model purely based on training misclassification rate, I would pick k = 1 due to the fact that it has a flawless classification rate. If I were to choose a model purely based on the cross-validation misclassification rate, I would choose k = 10 because, while it does not have the lowest misclassification rate, it would serve a better use for inputs not based off the training data. The training error data has high bias but low variability since it is based on the model we compare other input data to. On the other hand, cross-validation evaluates models against the training error with lower bias but high variance in order to better predict future inputs. 
+If I were to choose a model purely based on training misclassification rate, I would pick k = 1 due to the fact that it has a flawless classification rate. If I were to choose a model purely based on the cross-validation misclassification rate, I would choose $k = 10$ because, while it does not have the lowest misclassification rate, it would serve a better use for inputs not based off the training data. The 'training error' data has high bias but low variability since it is based on the model we compare other input data to. On the other hand, cross-validation evaluates models against the training error with lower bias but high variance in order to better predict future inputs. 
 
 # Demonstrating Random Forest Cross-Validation Function
 
@@ -206,7 +207,7 @@ rownames(base) <- c("10 folds", "5 folds", "2 folds")
 base
 ```
 
-As the number of folds increase between each random forest test, we see a corresponding decrease in both the mean and standard deviation. With 2 total folds, we see a boxplot with a relatively high range compared to the boxplots of 5 and 10 folds, reflecting that more and more folds lead to higher accuracy and a smaller range of error. 
+As the number of folds increase between each 'random forest test', we see a corresponding decrease in both the mean and standard deviation. With 2 total folds, we see a boxplot with a relatively high range compared to the boxplots of 5 and 10 folds, reflecting that more and more folds lead to higher accuracy and a smaller range of error. 
 
 
 

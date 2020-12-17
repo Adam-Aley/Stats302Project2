@@ -39,6 +39,6 @@ my_lm <- function(formula, data) {
   return(data.frame("Estimate" = beta,
                     "Std. Error" = se,
                     "t_value" = tStats,
-                    "Pr(>|t|)" = p_vals))
+                    "p_value" = p_vals))
 }
 
