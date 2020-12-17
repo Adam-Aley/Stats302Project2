@@ -127,9 +127,9 @@ ggplot(data = cbind(my_gapminder, model) %>% rename(Continent = continent),
   theme(plot.title = element_text(hjust = 0.5, face = "bold"))
 ```
 
-Though the correlation between GDP per capita and Life Expectancy isn't perfect, with greater deviations for more populated continents, the plot 
-generally reflects our previous assumption of a strong correlation between the 
-two variables. 
+Though the correlation between GDP per capita and Life Expectancy isn't perfect,
+with greater deviations for more populated continents, the plot generally
+reflects our previous assumption of a strong correlation between the two variables. 
 
 # Demonstrating K-Nearest Neighbors Cross-Validation Function
 
@@ -164,26 +164,27 @@ CV_5 <- 1:30
 CV_10<- 1:30
 # Fill vectors with random cv errors of various random forests of same folds
 for (k in 1:30) {
-  CV_2[k] <- my_rf_cv(new_penguins, 2)
-  CV_5[k] <- my_rf_cv(new_penguins, 5)
-  CV_10[k] <- my_rf_cv(new_penguins, 10) 
+  CV_2[k] <- my_rf_cv(new_penguins, 2)$cv_err
+  CV_5[k] <- my_rf_cv(new_penguins, 5)$cv_err
+  CV_10[k] <- my_rf_cv(new_penguins, 10)$cv_err 
 }
 ```
 
 ```{r}
 # Groups all CVs
-CVs <- c(CV_2, CV_5, CV_10)
+CVs <- cbind(CV_2, CV_5, CV_10)
 # Categorize CVs by number of folds
 folds <- rep(c("2", "5", "10"), each = 30)
 final_folds <- as.factor(folds)
+df <- data.frame(CVs, final_folds)
 # Create boxplot of various numbers of folds
 ggplot(data = as.data.frame(cbind(as.numeric(CVs), final_folds)), 
-       aes(x = folds, y = CVs, group = folds)) +
+       aes(x = final_folds, y = CVs, group = final_folds)) +
   # Generates plot
   geom_boxplot() +
   # Creates lables
   labs(title = "Cross-Validation Errors of Multiple Random Forests", 
-       x = "Number of Folds", y = "Cross-Validation Error") +
+       x = "Total Folds (2, 10, 5)", y = "Cross-Validation Error") +
   # Resets themes
   theme(plot.title = element_text(hjust = 0.5, face = "bold"), 
         axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),
@@ -193,16 +194,19 @@ ggplot(data = as.data.frame(cbind(as.numeric(CVs), final_folds)),
 ```
 
 
+
 ```{r}
 # Creates vector of mean CVs for various folds
 average_cv <- c(mean(CVs[1:30]), mean(CVs[31:60]), mean(CVs[61:90]))
 # Creates vector of sd of CVs for various folds
 sd_cv <- c(sd(CVs[1:30]), sd(CVs[31:60]), sd(CVs[61:90]))
 # Produces table of means and sds for various folds
-as.data.frame(cbind(average_cv, sd_cv))
+base <- as.data.frame(cbind(average_cv, sd_cv))
+rownames(base) <- c("10 folds", "5 folds", "2 folds")
+base
 ```
 
-
+As the number of folds increase between each random forest test, we see a corresponding decrease in both the mean and standard deviation. With 2 total folds, we see a boxplot with a relatively high range compared to the boxplots of 5 and 10 folds, reflecting that more and more folds lead to higher accuracy and a smaller range of error. 
 
 
 

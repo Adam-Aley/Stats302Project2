@@ -41,3 +41,4 @@ my_lm <- function(formula, data) {
                     "t_value" = tStats,
                     "Pr(>|t|)" = p_vals))
 }
+

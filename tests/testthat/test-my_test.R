@@ -6,8 +6,19 @@ test_that("multiplication works", {
 test_that("non-numeric input throws error", {
   expect_error(my_test((1:10), 1, 1))
 })
-test_that("my_test works properly", {
-  expect_is(my_t.test(rnorm(100, 0, 1),"lesser", 5), "list")
-  expect_is(my_t.test(rnorm(100, 0, 1),"greater", 5), "list")
-  expect_is(my_t.test(rnorm(100, 0, 1),"two-sided", 5), "list")
+test_that("my_test alternative is lesser properly", {
+  expect_is(my_test(my_gapminder[[4]], "lesser", 60), "list")
 })
+
+test_that("my_test alternative is greater properly", {
+  expect_is(my_test(my_gapminder[[4]], "greater", 60), "list")
+})
+
+test_that("my_test alternative is two-sided properly", {
+  expect_is(my_test(my_gapminder[[4]], "two-sided", 60), "list")
+})
+
+test_that("String input throws error", {
+  expect_error(my_test(my_gapminder[[4]], 1, 60))
+})
+
