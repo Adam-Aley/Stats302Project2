@@ -103,8 +103,8 @@ corresponding change of 1 unit in Life Expectancy, seperated by continents.
 
 The hypothesis test associated with the gdpPercap coefficient is:
 
-$H_0 : GDP \ per \ capita \  does \ not \ affect \ Life Expectancy$
-$H_A : GDP \ per \ capita \ does \ affect \ Life Expectancy$
+$H_0$ : *GDP per capita does not affect Life Expectancy* 
+$H_A$ : *GDP per capita does affect Life Expectancy*
 
 We can reject the null hypothesis compared against a significance level 
 of $\alpha = 0.05$, as p-value < 0.05 by a significant amount. Therefore,
