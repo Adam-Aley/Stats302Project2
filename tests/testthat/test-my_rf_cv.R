@@ -7,6 +7,9 @@ test_that("multiplication works", {
 })
 
 # Within my test-my_rf_cv.R
-test_that("output is numeric", {
+test_that("output is right type", {
   expect_is(my_rf_cv(5), "numeric")
+})
+test_that("invalid input", {
+  expect_error(my_rf_cv("string"))
 })

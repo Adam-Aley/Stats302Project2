@@ -12,6 +12,5 @@ test_that("my_knn_cv works properly", {
       1, 5), "list")
 })
 test_that("incorrect input throws error", {
-  expect_error(my_knn_cv(c(1,2,3), c(100,200), "a string", "number"))
-  expect_error(my_knn_cv("1","2","3"))
+  expect_error(my_knn_cv(1, 2, 3, 4))
 })
