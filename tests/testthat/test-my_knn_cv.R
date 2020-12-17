@@ -1,4 +1,3 @@
-library(tidyr)
 data("my_penguins")
 new_penguins <- na.omit(my_penguins)
 

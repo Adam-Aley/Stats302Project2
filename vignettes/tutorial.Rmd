@@ -156,6 +156,7 @@ for (n in 1:10) {
   cv[n] <- my_knn_cv(new_penguins[, -c(1, 2, 7, 8)], new_penguins$species, n, 5)$cv_err
   train[n] <- my_knn_cv(new_penguins[, -c(1, 2, 7, 8)], new_penguins$species, n, 5)$train_err
 }
+# Displays cross validation and training errors
 cbind(cv, train)
 ``` 
 
