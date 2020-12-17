@@ -119,7 +119,7 @@ model <- model.matrix(lifeExp ~ gdpPercap + continent,
 ggplot(data = cbind(my_gapminder, model) %>% rename(Continent = continent), 
        aes(x = model, y = lifeExp, color = Continent) ) +
   # Creates plots
-  geom_boxplot() +
+  geom_point() +
   # Sets lables
   labs(title = "Actual vs. Fitted Life Expectancy", 
        x = "Fitted", y = "Actual") +
@@ -143,9 +143,9 @@ data("my_penguins")
 new_penguins <- na.omit(my_penguins)
 # Create empty 10 unit vector
 cv <- numeric(10)
-# Create another empty 10 unit vector
+# Create another empty 
 train <- numeric(10)
-# Stores cv and training errors for 5 fold k_nearest neighbors from 1 to 10
+# Stores cv and training errors for 5 fold k_nearest10 unit vector neighbors from 1 to 10
 for (n in 1:10) {
   cv[n] <- my_knn_cv(new_penguins[, -c(1, 2, 7, 8)], new_penguins$species, n, 5)$cv_err
   train[n] <- my_knn_cv(new_penguins[, -c(1, 2, 7, 8)], new_penguins$species, n, 5)$train_err
@@ -158,23 +158,26 @@ If I were to choose a model purely based on training misclassification rate, I w
 # Demonstrating Random Forest Cross-Validation Function
 
 ```{r}
-cv_2 <- 1:30
-cv_5 <- 1:30
-cv_10 <- 1:30
-# Store results from each Random Forest Function into vectors
+# Initialize three length 30 vectors
+CV_2 <- 1:30
+CV_5 <- 1:30
+CV_10<- 1:30
+# Fill vectors with random cv errors of various random forests of same folds
 for (k in 1:30) {
-cv_2[k] <- my_rf_cv(new_penguins, 2)
-cv_5[k] <- my_rf_cv(new_penguins, 5)
-cv_10[k] <-my_rf_cv(new_penguins, 10)
+  CV_2[k] <- my_rf_cv(new_penguins, 2)
+  CV_5[k] <- my_rf_cv(new_penguins, 5)
+  CV_10[k] <- my_rf_cv(new_penguins, 10) 
 }
 ```
+
 ```{r}
-# Groups all cvs
-CVs <- c(cv_2, cv_5, cv_10)
-# Categorize cvs by number of folds
-folds <- rep(c("k = 2", "k = 5", "k = 10"), each = 30)
+# Groups all CVs
+CVs <- c(CV_2, CV_5, CV_10)
+# Categorize CVs by number of folds
+folds <- rep(c("2", "5", "10"), each = 30)
+final_folds <- as.factor(folds)
 # Create boxplot of various numbers of folds
-ggplot(data = as.data.frame(cbind(as.numeric(CVs), folds)), 
+ggplot(data = as.data.frame(cbind(as.numeric(CVs), final_folds)), 
        aes(x = folds, y = CVs, group = folds)) +
   # Generates plot
   geom_boxplot() +
@@ -184,8 +187,8 @@ ggplot(data = as.data.frame(cbind(as.numeric(CVs), folds)),
   # Resets themes
   theme(plot.title = element_text(hjust = 0.5, face = "bold"), 
         axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),
-        panel.spacing.x = unit(0.75, "cm")) +
-  # Gives sensible order to boxes of folds
+        panel.spacing.x = unit(0.75, "cm")) 
+# Gives sensible order to boxes of folds
   scale_x_discrete(limits = c("k = 2", "k = 5", "k = 10"))
 ```
 
@@ -198,7 +201,6 @@ sd_cv <- c(sd(CVs[1:30]), sd(CVs[31:60]), sd(CVs[61:90]))
 # Produces table of means and sds for various folds
 as.data.frame(cbind(average_cv, sd_cv))
 ```
-
 
 
 
